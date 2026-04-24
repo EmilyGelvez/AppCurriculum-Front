@@ -1,0 +1,43 @@
+{
+  "name": "quasar-project",
+  "version": "0.0.1",
+  "description": "Aplicación para que los usuarios manden su CV",
+  "productName": "AppCV",
+  "author": "EmilyGelvez <emilygelvez124@gmail.com>",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
+    "dev": "quasar dev",
+    "build": "quasar build",
+    "postinstall": "quasar prepare"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
+    "@quasar/extras": "^1.16.4",
+    "axios": "^1.15.1",
+    "pinia": "^3.0.1",
+    "quasar": "^2.16.0",
+    "vue": "^3.5.22",
+    "vue-i18n": "^11.3.0",
+    "vue-router": "^5.0.3"
+  },
+  "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^11.0.0",
+    "@quasar/app-vite": "^2.5.1",
+    "@types/node": "^22.19.11",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "autoprefixer": "^10.4.27",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.9"
+  },
+  "engines": {
+    "node": "^28 || ^26 || ^24 || ^22.12",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1",
+    "pnpm": ">= 10.0.0"
+  }
+}
