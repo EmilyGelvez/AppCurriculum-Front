@@ -1,18 +1,15 @@
 import { boot } from 'quasar/wrappers'
-import axios, { AxiosInstance } from 'axios'
+import axios from 'axios'
 import { limpiarSesion } from 'src/utils/auth'
 
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $axios: AxiosInstance;
-    $api: AxiosInstance;
-  }
-}
-
-const api = axios.create({ baseURL: 'http://localhost:3000' })
+// Creamos la instancia fuera para poder exportarla
+const api = axios.create({ 
+  baseURL: 'http://localhost:3000',
+  timeout: 10000 
+})
 
 export default boot(({ app, router }) => {
-  // 1. Interceptor de Petición (Envía el token al servidor)
+  // Interceptor de Petición
   api.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem('orinoco_token')
@@ -24,14 +21,17 @@ export default boot(({ app, router }) => {
     (error) => Promise.reject(error)
   )
 
-  // 2. Interceptor de Respuesta (Te saca si el servidor dice 401)
+  // Interceptor de Respuesta
   api.interceptors.response.use(
     (response) => response,
     (error) => {
+      // 🛡️ REGLA DE ORO: Solo sacar si es 401 real y NO estamos ya en el login
       if (error.response && error.response.status === 401) {
-        console.log('Sesión expirada detectada por el escudo 401')
-        limpiarSesion()
-        router.push('/login')
+        if (router.currentRoute.value.path !== '/login') {
+          console.warn('Sesión expirada. Limpiando datos...')
+          limpiarSesion()
+          router.replace('/login')
+        }
       }
       return Promise.reject(error)
     }

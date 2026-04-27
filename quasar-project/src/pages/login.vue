@@ -28,10 +28,6 @@
                                     to="/login">
                                     ¿Olvidaste tu contraseña?
                                 </router-link>
-                                <router-link class="text-primary cursor-pointer" style="text-decoration: none"
-                                    to="/registrarse">
-                                    Crear cuenta
-                                </router-link>
                             </div>
                         </div>
                     </q-form>
