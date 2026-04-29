@@ -52,11 +52,20 @@
       </template>
     </q-table>
 
+    <!-- MODAL ACTUALIZADO CON EMAIL -->
     <q-dialog v-model="mostrarModal">
       <q-card style="min-width: 350px">
         <q-card-section><div class="text-h6">Registrar Nuevo Acceso</div></q-card-section>
         <q-card-section class="q-gutter-md">
           <q-input v-model="nuevoUsuario.username" label="Nombre de usuario" filled dense />
+          <!-- NUEVO CAMPO DE EMAIL 📧 -->
+          <q-input 
+            v-model="nuevoUsuario.email" 
+            label="Correo Electrónico" 
+            type="email" 
+            filled dense 
+            placeholder="ejemplo@orinoco.com"
+          />
           <q-input v-model="nuevoUsuario.password" label="Contraseña" type="password" filled dense />
           <q-select v-model="nuevoUsuario.role" :options="opcionesRoles" label="Asignar Rol" filled dense />
         </q-card-section>
@@ -81,17 +90,20 @@ const userRole = ref('');
 const userId = ref('');
 const mostrarModal = ref(false);
 const loading = ref(false);
-const ordenFecha = ref('Más recientes'); // 👈 Cambiado a fecha
+const ordenFecha = ref('Más recientes');
 
 const filtros = reactive({
   username: '',
   role: 'Todos'
 });
 
-const nuevoUsuario = ref({ username: '', password: '', role: 'viewer' });
+// OBJETO INICIALIZADO CON EMAIL
+const nuevoUsuario = ref({ username: '', email: '', password: '', role: 'viewer' });
 
+// COLUMNAS ACTUALIZADAS PARA VER EL EMAIL EN LA TABLA
 const columns = [
   { name: 'username', label: 'Usuario', field: 'username', align: 'left', sortable: true },
+  { name: 'email', label: 'Email', field: 'email', align: 'left', sortable: true }, // 👈 Agregado
   { name: 'role', label: 'Rol', field: 'role', align: 'left', sortable: true },
   { name: 'actions', label: 'Acciones', align: 'center' }
 ];
@@ -103,7 +115,7 @@ const cargarUsuarios = async () => {
   try {
     const res = await api.get('/users', { headers: { Authorization: `Bearer ${token}` } });
     usuarios.value = res.data;
-    aplicarOrden(); // 👈 Ordenar al cargar
+    aplicarOrden();
   } catch (e) {
     $q.notify({ color: 'negative', message: 'Error de sincronización' });
   } finally {
@@ -125,7 +137,6 @@ const usuariosFiltradosYOrdenados = computed(() => {
   });
 });
 
-// 💡 Lógica de orden por fecha de creación (createdAt)
 const aplicarOrden = () => {
   usuarios.value.sort((a, b) => {
     const fechaA = new Date(a.createdAt || 0);
@@ -137,8 +148,9 @@ const aplicarOrden = () => {
 const crearUsuario = async () => {
   try {
     const token = localStorage.getItem('orinoco_token');
+    // nuevoUsuario.value ya contiene el email gracias al v-model
     await api.post('/users/register', nuevoUsuario.value, { headers: { Authorization: `Bearer ${token}` } });
-    $q.notify({ color: 'positive', message: 'Usuario creado' });
+    $q.notify({ color: 'positive', message: 'Usuario creado con éxito' });
     mostrarModal.value = false;
     cargarUsuarios();
   } catch (e) {
@@ -175,7 +187,8 @@ const puedeEliminar = (targetUser) => {
 };
 
 const abrirModal = () => {
-  nuevoUsuario.value = { username: '', password: '', role: 'viewer' };
+  // Limpiamos los campos incluyendo el email al abrir
+  nuevoUsuario.value = { username: '', email: '', password: '', role: 'viewer' };
   mostrarModal.value = true;
 };
 

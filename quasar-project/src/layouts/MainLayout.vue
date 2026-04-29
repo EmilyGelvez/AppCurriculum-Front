@@ -21,11 +21,11 @@
             <q-item-section>Inicio</q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/Dashboard" active-class="my-menu-link">
+          <q-item clickable v-ripple to="/Curriculums" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon color="primary" name="dashboard" />
             </q-item-section>
-            <q-item-section>Dashboard</q-item-section>
+            <q-item-section>Currículums</q-item-section>
           </q-item>
 
           <q-item 
