@@ -136,7 +136,9 @@ import { ref, onMounted, reactive } from 'vue'
 import { api } from 'src/boot/axios'
 import { useQuasar } from 'quasar'
 import { jwtDecode } from 'jwt-decode'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const $q = useQuasar()
 const rows = ref([])
 const loading = ref(false)
@@ -216,6 +218,9 @@ onMounted(() => {
   if (token) {
     try { const decoded = jwtDecode(token); userRole.value = decoded.role } catch (e) { }
   }
+    if (route.query.cargo) {
+      filtros.cargo = route.query.cargo
+    }
   cargarPostulaciones()
 })
 </script>

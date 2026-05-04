@@ -103,7 +103,7 @@ export default {
       if (intervaloInactividad) clearInterval(intervaloInactividad)
       
       $q.notify({
-        type: 'warning',
+        type: 'positive',
         message: mensaje,
         position: 'top'
       })
