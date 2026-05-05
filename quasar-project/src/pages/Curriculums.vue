@@ -193,8 +193,14 @@ const aplicarOrdenFecha = () => {
 }
 
 const abrirPDF = (archivo) => {
-  if (archivo) window.open(`http://localhost:3000/${archivo}`, '_blank')
-}
+  const baseUrl = import.meta.env.VITE_API_URL;
+
+  if (archivo) {
+    const url = `${baseUrl}/uploads/${archivo}`;
+    console.log("PDF URL:", url);
+    window.open(url, '_blank');
+  }
+};
 
 const confirmarEliminar = (postulacion) => {
   $q.dialog({
@@ -218,9 +224,9 @@ onMounted(() => {
   if (token) {
     try { const decoded = jwtDecode(token); userRole.value = decoded.role } catch (e) { }
   }
-    if (route.query.cargo) {
-      filtros.cargo = route.query.cargo
-    }
+  if (route.query.cargo) {
+    filtros.cargo = route.query.cargo
+  }
   cargarPostulaciones()
 })
 </script>
