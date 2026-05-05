@@ -42,7 +42,7 @@ export default defineConfig((ctx) => {
         VITE_API_URL: process.env.VITE_API_URL || 'http://localhost:3000'
       },
       target: {
-        browser: ['baseline-widely-available','es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
+        browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node22'
       },
 
@@ -83,7 +83,7 @@ export default defineConfig((ctx) => {
           ssr: ctx.modeName === 'ssr',
 
           // you need to set i18n resource including paths !
-          include: [ fileURLToPath(new URL('./src/i18n', import.meta.url)) ]
+          include: [fileURLToPath(new URL('./src/i18n', import.meta.url))]
         }]
       ]
     },
@@ -135,7 +135,7 @@ export default defineConfig((ctx) => {
     // https://v2.quasar.dev/quasar-cli-vite/developing-ssr/configuring-ssr
     ssr: {
       prodPort: 3000, // The default port that the production server should use
-                      // (gets superseded if process.env.PORT is specified at runtime)
+      // (gets superseded if process.env.PORT is specified at runtime)
 
       middlewares: [
         'render' // keep this as last one
@@ -187,7 +187,7 @@ export default defineConfig((ctx) => {
       // extendPackageJson (json) {},
 
       // Electron preload scripts (if any) from /src-electron, WITHOUT file extension
-      preloadScripts: [ 'electron-preload' ],
+      preloadScripts: ['electron-preload'],
 
       // specify the debugging port to use for the Electron app when running in development mode
       inspectPort: 5858,
