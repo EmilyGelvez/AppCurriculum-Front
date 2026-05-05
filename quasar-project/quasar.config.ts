@@ -38,8 +38,11 @@ export default defineConfig((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
     build: {
+      env: {
+        VITE_API_URL: process.env.VITE_API_URL || 'http://localhost:3000'
+      },
       target: {
-        browser: 'baseline-widely-available',
+        browser: ['baseline-widely-available','es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node22'
       },
 
