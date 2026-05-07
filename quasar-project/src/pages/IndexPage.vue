@@ -1,5 +1,5 @@
 <template>
-  <q-page class="bg-grey-2 overflow-hidden flex flex-center" style="height: calc(100vh - 50px);">
+  <q-page class="bg-grey-2 flex flex-center q-pt-sm-none q-pt-md" style="min-height: calc(100vh - 50px);">
     <div class="full-width q-px-lg" style="max-width: 1400px;">
       
       <!-- CABECERA -->
@@ -11,8 +11,8 @@
       <!-- TABLERO -->
       <div class="row items-stretch bg-transparent overflow-hidden">
         
-        <!-- Lado IZQUIERDO: Galería -->
-        <div class="col-12 col-md-5">
+        <!-- Lado IZQUIERDO: Galería — oculto en mobile -->
+        <div class="col-md-5 gt-sm">
           <q-carousel
             v-model="slide"
             transition-prev="slide-right"
@@ -54,13 +54,13 @@
           </div>
 
           <!-- Grid de Cargos -->
+          <!-- En desktop: col-sm-3 = 4 columnas | En mobile: col-3 = 4 columnas compactas -->
           <div class="row q-col-gutter-sm">
             <div v-for="stat in stats" :key="stat.cargo" class="col-6 col-sm-3">
               <q-card flat bordered class="stat-card-mini text-center transition-hover" style="border-radius: 8px;" @click="$router.push({ path: '/curriculums', query: { cargo: stat.cargo } })">
                 <q-card-section class="q-pa-sm">
                   <q-icon :name="stat.icon" size="20px" color="primary" />
                   
-                  <!-- Número con el azul solicitado #0C1E3C -->
                   <div class="text-bold q-mt-xs" style="font-size: 1.1rem; color: #0C1E3C;">
                     {{ stat.count }}
                   </div>
@@ -69,7 +69,6 @@
                     {{ stat.cargo }}
                   </div>
                 </q-card-section>
-                <!-- Loader interno por tarjeta -->
                 <q-inner-loading :showing="loading">
                   <q-spinner-none color="primary" />
                 </q-inner-loading>
@@ -86,6 +85,7 @@
               label="VER TODOS LOS CURRÍCULUMS" 
               icon="visibility" 
               class="full-width text-bold" 
+              no-wrap
               to="/curriculums" 
             />
           </div>
@@ -186,4 +186,15 @@ onMounted(() => {
 }
 
 .overflow-hidden { overflow: hidden; }
+
+/* ── Solo mobile (< 600px) ── */
+@media (max-width: 599px) {
+  .stat-card-mini {
+    min-height: 72px;
+  }
+  .text-tiny {
+    font-size: 0.55rem;
+    letter-spacing: 0.2px;
+  }
+}
 </style>
