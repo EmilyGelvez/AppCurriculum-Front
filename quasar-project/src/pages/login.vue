@@ -140,9 +140,16 @@ export default {
 </script>
 
 <style scoped>
-/* Este es el toque clave para que se vea igual al de recuperación */
 .login-card {
-  border-top: 5px solid #DAA520; /* El color dorado/primary */
+  /* Mantenemos el radio y quitamos el borde por defecto para mobile */
   border-radius: 8px;
+  border-top: none; 
+}
+
+/* Solo se aplica el borde si la pantalla es de escritorio o tablet (mayor a 600px) */
+@media (min-width: 600px) {
+  .login-card {
+    border-top: 5px solid #DAA520;
+  }
 }
 </style>

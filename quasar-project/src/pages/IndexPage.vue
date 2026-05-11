@@ -35,7 +35,7 @@
 
         <!-- Lado DERECHO: Estadísticas -->
         <div class="col-12 col-md-7 q-pa-lg">
-          <div class="row items-center justify-between q-mb-md">
+          <div class="row items-center justify-between q-mb-md resumenPostulaciones">
             <div class="text-subtitle1 text-bold text-secondary">Resumen de Postulaciones</div>
             
             <!-- Botón de Total -->
@@ -82,11 +82,12 @@
               unelevated 
               style="background-color: #DAA520; border-radius: 8px;" 
               text-color="white" 
-              label="VER TODOS LOS CURRÍCULUMS" 
+              label="Ver todos los currículums" 
               icon="visibility" 
               class="full-width text-bold" 
               no-wrap
               to="/curriculums" 
+              no-caps
             />
           </div>
         </div>
@@ -195,6 +196,9 @@ onMounted(() => {
   .text-tiny {
     font-size: 0.55rem;
     letter-spacing: 0.2px;
+  }
+  .resumenPostulaciones{
+    justify-content: center;
   }
 }
 </style>

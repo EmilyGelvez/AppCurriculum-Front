@@ -3,7 +3,7 @@
     <q-page-container>
       <q-page class="flex flex-center bg-grey-2">
         <q-card class="q-pa-md shadow-2 login-card" style="width: 400px">
-          
+
           <q-card-section class="text-center">
             <div class="flex justify-center q-mb-md">
               <q-img src="../assets/orinoco tech.png" style="width: 150px" />
@@ -16,40 +16,28 @@
 
           <q-card-section v-if="tokenValido">
             <q-form @submit="actualizarPassword" class="q-gutter-md">
-              <q-input
-                v-model="nuevaPassword"
-                type="password"
-                label="Nueva contraseña"
-                filled
-                :rules="[val => val && val.length >= 6 || 'Mínimo 6 caracteres']"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="lock" />
+              <q-input v-model="nuevaPassword" :type="verNueva ? 'text' : 'password'" label="Nueva contraseña" filled
+                :rules="reglasPassword" hint="Mínimo 8 caracteres, mayúscula, número y carácter especial">
+                <template v-slot:prepend><q-icon name="lock" /></template>
+                <template v-slot:append>
+                  <q-icon :name="verNueva ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                    @click="verNueva = !verNueva" />
                 </template>
               </q-input>
 
-              <q-input
-                v-model="confirmarPassword"
-                type="password"
-                label="Confirmar contraseña"
-                filled
-                :rules="[
-                  val => val === nuevaPassword || 'Las contraseñas no coinciden'
-                ]"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="lock_reset" />
+              <q-input v-model="confirmarPassword" :type="verConfirmar ? 'text' : 'password'"
+                label="Confirmar contraseña" filled
+                :rules="[val => val === nuevaPassword || 'Las contraseñas no coinciden']">
+                <template v-slot:prepend><q-icon name="lock_reset" /></template>
+                <template v-slot:append>
+                  <q-icon :name="verConfirmar ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                    @click="verConfirmar = !verConfirmar" />
                 </template>
               </q-input>
 
               <div>
-                <q-btn
-                  label="Guardar Nueva Clave"
-                  type="submit"
-                  color="primary"
-                  class="full-width"
-                  :loading="loading"
-                />
+                <q-btn label="Guardar Nueva Clave" type="submit" color="primary" class="full-width"
+                  :loading="loading" />
               </div>
             </q-form>
           </q-card-section>
@@ -72,6 +60,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { api } from 'src/boot/axios';
 import { useQuasar } from 'quasar';
+import { reglasPassword } from 'src/utils/passwordValidator'
 
 const route = useRoute();
 const router = useRouter();
@@ -82,6 +71,9 @@ const confirmarPassword = ref('');
 const loading = ref(false);
 const tokenValido = ref(false);
 const token = ref('');
+
+const verNueva = ref(false)
+const verConfirmar = ref(false)
 
 onMounted(() => {
   // Capturamos el token de la URL (?token=...)

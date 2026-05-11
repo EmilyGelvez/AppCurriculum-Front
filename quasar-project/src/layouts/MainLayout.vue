@@ -21,6 +21,13 @@
             <q-item-section>Inicio</q-item-section>
           </q-item>
 
+          <q-item clickable v-ripple to="/perfilusuario" active-class="my-menu-link">
+            <q-item-section avatar>
+              <q-icon color="primary" name="manage_accounts" />
+            </q-item-section>
+            <q-item-section>Mi Perfil</q-item-section>
+          </q-item>
+
           <q-item clickable v-ripple to="/Curriculums" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon color="primary" name="dashboard" />
@@ -36,7 +43,7 @@
             active-class="my-menu-link"
           >
             <q-item-section avatar>
-              <q-icon color="primary" name="person" />
+              <q-icon color="primary" name="people" />
             </q-item-section>
             <q-item-section>Usuarios</q-item-section>
           </q-item>
